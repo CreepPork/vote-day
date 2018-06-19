@@ -19,4 +19,20 @@ class CfgPatches
 	};
 };
 
+class CfgFunctions
+{
+    class CP
+    {
+        project = "CP";
+        tag = "CP";
+
+        class voteSystem
+        {
+            file = "\voteSystem\vote_day\functions";
+
+            class vote;
+        }
+    }
+}
+
 #include "XEH_postInit.cpp"

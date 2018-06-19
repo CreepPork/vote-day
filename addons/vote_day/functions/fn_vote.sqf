@@ -1,15 +1,26 @@
 #define NEEDED_PLAYER_PRECENTAGE 70
 
+// TODO: add more commands like #vote night, #vote weather storm, #vote zeus <player>
+// TODO: check if works on dedi
+// TODO: check if it needs to be a server mod only
+// TODO: fix XEH only initing once
+// TODO: add reminder messages
+
+
+["Voting system init"] remoteExec ["systemChat", 0];
+
 ["vote", {
     params ["_command"];
 
-    if (_command == "day" && isMultiplayer) then
+    // TODO: If already day
+
+    if (_command == "day") then
     {
         private _playerCount = count allPlayers;
 
         private _neededPlayerCount = round((NEEDED_PLAYER_PRECENTAGE / 100) * _playerCount);
 
-        if (CP_voteDay_count == null) then
+        if (isNil "CP_voteDay_count") then
         {
             CP_voteDay_count = "Land_HelipadEmpty_F" createVehicle [0, 0, 0];
 
@@ -17,6 +28,8 @@
             publicVariable "CP_voteDay_count";
 
             [format ["%1 voted for day! Votes needed: %2/%3", name player, 1, _neededPlayerCount]] remoteExecCall ["systemChat", 0];
+
+            //TODO: if only one player
         }
         else
         {
@@ -42,7 +55,8 @@
 
                     private _timeToSkip = (date select 3) - _sunriseTime;
 
-                    if (_timeToSkip =< 0) then
+                    // TODO: this probably doesn't work
+                    if (_timeToSkip <= 0) then
                     {
                         _timeToSkip = _timeToSkip * -1;
                     };
