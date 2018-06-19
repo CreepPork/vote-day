@@ -18,3 +18,5 @@ class CfgPatches
 		};
 	};
 };
+
+#include "XEH_postInit.cpp"
