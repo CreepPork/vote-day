@@ -3,19 +3,18 @@
 // TODO: add more commands like #vote night, #vote weather storm, #vote zeus <player>
 // TODO: check if works on dedi
 // TODO: check if it needs to be a server mod only
-// TODO: fix XEH only initing once
 // TODO: add reminder messages
-
-
-["Voting system init"] remoteExec ["systemChat", 0];
 
 ["vote", {
     params ["_command"];
 
-    // TODO: If already day
-
     if (_command == "day") then
     {
+        private _hour = date select 3;
+        (date call BIS_fnc_sunriseSunsetTime) params ["_sunrise", "_sunset"];
+
+        if (_hour >= _sunrise && _hour <= _sunset) exitWith { systemChat "It is day already!" };
+
         private _playerCount = count allPlayers;
 
         private _neededPlayerCount = round((NEEDED_PLAYER_PRECENTAGE / 100) * _playerCount);
@@ -29,7 +28,10 @@
 
             [format ["%1 voted for day! Votes needed: %2/%3", name player, 1, _neededPlayerCount]] remoteExecCall ["systemChat", 0];
 
-            //TODO: if only one player
+            if (1 == _neededPlayerCount) then
+            {
+                call CP_fnc_setDay;
+            };
         }
         else
         {
@@ -49,19 +51,7 @@
 
                 if (_votedPlayers + 1 == _neededPlayerCount) then
                 {
-                    ["Vote count reached, setting day!"] remoteExecCall ["systemChat", 0];
-
-                    private _sunriseTime = (date call BIS_fnc_sunriseSunsetTime) select 0;
-
-                    private _timeToSkip = (date select 3) - _sunriseTime;
-
-                    // TODO: this probably doesn't work
-                    if (_timeToSkip <= 0) then
-                    {
-                        _timeToSkip = _timeToSkip * -1;
-                    };
-
-                    [_timeToSkip] remoteExecCall ["skipTime", 2];
+                    call CP_fnc_setDay;
                 };
             };
         };

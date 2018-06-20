@@ -31,6 +31,7 @@ class CfgFunctions
             file = "\voteSystem\vote_day\functions";
 
             class vote;
+            class setDay;
         }
     }
 }
