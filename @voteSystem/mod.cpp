@@ -1,10 +1,10 @@
-name = "Vote Day";
+name = "Vote System";
 picture = "";
-description = "Makes voting for day much easier!";
+description = "Makes voting much easier!";
 logo = "";
 logoOver = "";
-tooltip = "Vote Day";
-tooltipOwned = "Vote Day Owned";
+tooltip = "Vote System";
+tooltipOwned = "Vote System Owned";
 overview = "Simple addon using the CBA framework to add a chat command #vote day to trigger day time if majority of the players agree!";
 author = "CreepPork_LV";
 overviewPicture = "";
